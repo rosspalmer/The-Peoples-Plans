@@ -1,3 +1,12 @@
+
+# Intellij Ignores
 *.idea
+
+# Java / Scala Ignores
 *.class
 *.log
+
+# Web App Ignores
+packages/web-app/node_modules
+packages/web-app/package-lock.json
+packages/web-app/dist
