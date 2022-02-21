@@ -7,6 +7,6 @@
 *.log
 
 # Web App Ignores
+packages/web-app/dist
 packages/web-app/node_modules
 packages/web-app/package-lock.json
-packages/web-app/dist
