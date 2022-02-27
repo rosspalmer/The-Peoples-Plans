@@ -29,7 +29,7 @@ resource "aws_lambda_function" "demo_lambda" {
   handler       = "index.test"
   source_code_hash = filebase64sha256("./lambda-zips/demo-lambda.zip")
 
-  runtime = "python3.9"
+  runtime = "python3.8"
 
   environment {
     variables = {
