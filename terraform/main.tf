@@ -2,28 +2,38 @@ provider "aws" {
   region = var.region
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
+resource "aws_iam_role" "iam_demo_lambda" {
+  name = "iam_demo_lambda"
 
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
 }
 
-resource "aws_instance" "ubuntu" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
+resource "aws_lambda_function" "demo_lambda" {
+  filename      = "./lambda-zips/demo-lambda.zip"
+  function_name = "demo_lambda"
+  role          = aws_iam_role.iam_demo_lambda.arn
+  handler       = "index.test"
+  source_code_hash = filebase64sha256("./lambda-zips/demo-lambda.zip")
 
-  tags = {
-    Name                 = var.instance_name
-    "Linux Distribution" = "Ubuntu"
+  runtime = "python3.9"
+
+  environment {
+    variables = {
+      foo = "bar"
+    }
   }
 }
