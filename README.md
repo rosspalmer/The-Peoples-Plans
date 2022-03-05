@@ -1,5 +1,7 @@
 # The-Peoples-Plans
 
+Prod Site: https://master.d2vt7v2anveb09.amplifyapp.com/
+
 ## Dev plan
 
 - Terraform setup
