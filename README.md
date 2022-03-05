@@ -23,3 +23,17 @@
   - Public 
   - Static / SPA (Single page app)
   - HTML/CSS/JS
+
+## Dev Process
+
+1. Create a new **branch** off of current `master` branch
+2. Develop and **commit** new changes to new branch
+3. Create pull request (**PR**) in Github to **merge** into `master` branch
+4. Code review of new PR by other developers for required **approvals**
+5. Push a new **plan** in Terraform to deploy changes
+
+## Process Maps
+
+![Overall Map](./docs/overall.png)
+
+![Component Map](./docs/component-map.png)
