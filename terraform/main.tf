@@ -30,11 +30,6 @@ resource "aws_lambda_function" "insert_data" {
   handler          = "insert_data.handler"
   runtime = "python3.8"
 
-  environment {
-    variables = {
-      foo = "bar"
-    }
-  }
 }
 
 resource "aws_lambda_function" "other_file" {
@@ -45,9 +40,4 @@ resource "aws_lambda_function" "other_file" {
   handler          = "other_file.handler"
   runtime = "python3.8"
 
-  environment {
-    variables = {
-      foo = "bar"
-    }
-  }
 }
