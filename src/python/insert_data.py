@@ -1,20 +1,17 @@
 
 import boto3
-from typing import Dict
 from json import loads
+from os import environ
+from typing import Dict
 
 from pplans.data_models import SerializableData, EventData, RawMessageData
+
 
 DATA_TYPES: Dict[str, SerializableData.__class__] = {
     'raw_message': RawMessageData,
     'event': EventData,
 }
-
-S3_BUCKETS = {
-    'prod': 'peoples-plans-json-prod',
-    'stg': 'peoples-plans-json-stg'
-}
-
+JSON_BUCKET = environ.get('JSON_BUCKET')
 
 s3 = boto3.client('s3')
 
@@ -42,5 +39,11 @@ def handler(event, context):
     # FIXME remove debug
     print('CLASS')
     print(data)
+    print('JSON_BUCKET')
+    print(JSON_BUCKET)
 
-
+    s3.put_object(
+        Body=data,
+        Bucket=JSON_BUCKET,
+        Key=f'{data_type}/{data.uid}.json'
+    )

@@ -41,6 +41,12 @@ resource "aws_lambda_function" "insert_data" {
   handler          = "insert_data.handler"
   runtime = "python3.8"
 
+  environment {
+    variables = {
+      JSON_BUCKET = local.json_bucket['prod']
+    }
+  }
+
 }
 
 resource "aws_lambda_function" "other_file" {
