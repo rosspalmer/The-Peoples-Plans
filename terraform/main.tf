@@ -2,6 +2,17 @@ provider "aws" {
   region = var.region
 }
 
+# == S3 ==
+
+resource "aws_s3_bucket" "json_s3_bucket" {
+  bucket = local.json_bucket["prod"]
+  tags = {
+    Environment = "Prod"
+  }
+}
+
+# == LAMBDAS ==
+
 resource "aws_iam_role" "iam_demo_lambda" {
   name = "iam_demo_lambda"
 
@@ -20,18 +31,6 @@ resource "aws_iam_role" "iam_demo_lambda" {
   ]
 }
 EOF
-}
-
-resource "aws_s3_bucket" "json_s3_bucket" {
-  bucket = local.json_bucket["prod"]
-  tags = {
-    Environment = "Prod"
-  }
-}
-
-resource "aws_s3_bucket_acl" "json_s3_acl" {
-  bucket = aws_s3_bucket.json_s3_bucket.id
-  acl    = "private"
 }
 
 resource "aws_lambda_function" "insert_data" {
