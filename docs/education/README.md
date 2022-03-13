@@ -1,5 +1,5 @@
 
-# Start Page
+Hello world
 
 ## Bash Shell and Scripting
 
@@ -12,3 +12,5 @@
 ## IDE Basics
 
 ## Coding Practices and Patterns
+
+## Java / Scala
