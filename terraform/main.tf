@@ -27,7 +27,22 @@ resource "aws_lambda_function" "insert_data" {
   function_name = "insert_data"
   role          = aws_iam_role.iam_demo_lambda.arn
   source_code_hash = filebase64sha256("./lambda-zips/insert_data.zip")
+  handler          = "insert_data.handler"
+  runtime = "python3.8"
 
+  environment {
+    variables = {
+      foo = "bar"
+    }
+  }
+}
+
+resource "aws_lambda_function" "other_file" {
+  filename      = "./lambda-zips/insert_data.zip"
+  function_name = "other_file"
+  role          = aws_iam_role.iam_demo_lambda.arn
+  source_code_hash = filebase64sha256("./lambda-zips/insert_data.zip")
+  handler          = "other_file.handler"
   runtime = "python3.8"
 
   environment {

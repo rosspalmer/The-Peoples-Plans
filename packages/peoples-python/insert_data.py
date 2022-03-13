@@ -19,7 +19,7 @@ S3_BUCKETS = {
 s3 = boto3.client('s3')
 
 
-def lambda_handler(event, context):
+def handler(event, context):
 
     if 'data_type' not in event:
         print("ERROR1 - FIXME")
