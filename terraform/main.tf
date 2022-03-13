@@ -22,12 +22,12 @@ resource "aws_iam_role" "iam_demo_lambda" {
 EOF
 }
 
-resource "aws_lambda_function" "demo_lambda" {
-  filename      = "./lambda-zips/demo-lambda.zip"
-  function_name = "demo_lambda"
+resource "aws_lambda_function" "insert_data" {
+  filename      = "./lambda-zips/insert_data.zip"
+  function_name = "insert_data"
   role          = aws_iam_role.iam_demo_lambda.arn
   handler       = "index.test"
-  source_code_hash = filebase64sha256("./lambda-zips/demo-lambda.zip")
+  source_code_hash = filebase64sha256("./lambda-zips/insert_data.zip")
 
   runtime = "python3.8"
 
