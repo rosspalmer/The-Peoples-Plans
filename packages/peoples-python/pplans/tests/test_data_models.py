@@ -2,15 +2,15 @@
 import pytest
 
 from json import loads
-from pplans.data_models import RawEvent
+from pplans.data_models import RawMessage
 
 
-class TestRawEvent:
+class TestRawMessage:
 
     def test_decode(self):
 
         event_json = '{"uid":"B-5", "author":"a@b.co", "text": "hello peach", "created": "Y-M-D"}'
-        event = loads(event_json, object_hook=RawEvent.decode_function)
+        event = loads(event_json, object_hook=RawMessage.decode_function)
 
         assert event.uid == "B-5"
         assert event.author == "a@b.co"
@@ -19,7 +19,7 @@ class TestRawEvent:
 
     def test_encode(self):
 
-        event = RawEvent("A-1", "ask@merch.com", "Do you know if you need stuff?")
+        event = RawMessage("A-1", "ask@merch.com", "Do you know if you need stuff?")
         event_created = event.created
 
         answer = '{"uid": "A-1", "author": "ask@merch.com", "text": "Do you know if you need stuff?", ' \

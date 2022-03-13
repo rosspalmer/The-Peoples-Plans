@@ -27,7 +27,7 @@ class DictEncoder(JSONEncoder):
         return o.__dict__
 
 
-class RawEvent(SerializableData):
+class RawMessage(SerializableData):
 
     def __init__(self, uid: str, author: str, text: str, created: str = None):
         self.uid = uid
@@ -37,7 +37,7 @@ class RawEvent(SerializableData):
 
     @staticmethod
     def decode_function(o: Dict) -> Any:
-        return RawEvent(o['uid'], o['author'], o['text'], o['created'])
+        return RawMessage(o['uid'], o['author'], o['text'], o['created'])
 
     def _get_encoder(self) -> JSONEncoder:
         return DictEncoder()
