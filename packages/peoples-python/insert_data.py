@@ -1,4 +1,5 @@
 
+import boto3
 from typing import Dict
 from json import loads
 
@@ -8,6 +9,14 @@ DATA_TYPES: Dict[str, SerializableData.__class__] = {
     'raw_message': RawMessageData,
     'event': EventData,
 }
+
+S3_BUCKETS = {
+    'prod': 'peoples-plans-json-prod',
+    'stg': 'peoples-plans-json-stg'
+}
+
+
+s3 = boto3.client('s3')
 
 
 def lambda_handler(event, context):
@@ -33,3 +42,5 @@ def lambda_handler(event, context):
     # FIXME remove debug
     print('CLASS')
     print(data)
+
+
