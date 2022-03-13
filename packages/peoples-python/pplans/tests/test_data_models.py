@@ -10,7 +10,7 @@ class TestRawMessageData:
     def test_decode(self):
 
         msg_json = '{"uid":"B-5", "author":"a@b.co", "text": "hello peach", "created": "Y-M-D"}'
-        msg = loads(msg_json, object_hook=RawMessageData.decode_function)
+        msg = loads(msg_json, object_hook=RawMessageData.json_object_hook)
 
         assert msg.uid == "B-5"
         assert msg.author == "a@b.co"
@@ -37,8 +37,8 @@ class TestEventData:
         event_b_json = '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
                        '"hRe", "link": "hi.jack", "tags": ["ok", "move"]}'
 
-        event_a = loads(event_a_json, object_hook=EventData.decode_function)
-        event_b = loads(event_b_json, object_hook=EventData.decode_function)
+        event_a = loads(event_a_json, object_hook=EventData.json_object_hook)
+        event_b = loads(event_b_json, object_hook=EventData.json_object_hook)
 
         assert event_a.uid == 'E8t'
         assert event_a.name == 'A M8t'
