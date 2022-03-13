@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 import datetime as dt
 from json import JSONEncoder
-from typing import Any, Dict
+from typing import Any, Dict, Set, List
 
 DATE_FMT = '%Y-%m-%dT%H:%M:%S'
 
@@ -37,7 +37,26 @@ class RawMessageData(SerializableData):
 
     @staticmethod
     def decode_function(o: Dict) -> Any:
-        return RawMessageData(o['uid'], o['author'], o['text'], o['created'])
+        return RawMessageData(**o)
+
+    def _get_encoder(self) -> JSONEncoder:
+        return DictEncoder()
+
+
+class EventData(SerializableData):
+
+    def __init__(self, uid: str, name: str, datetime: str,
+                 location_uid: str, link: str, tags: List[str] = None):
+        self.uid = uid
+        self.name = name
+        self.datetime = datetime
+        self.location_uid = location_uid
+        self.link = link
+        self.tags = tags
+
+    @staticmethod
+    def decode_function(o: Dict) -> Any:
+        return EventData(**o)
 
     def _get_encoder(self) -> JSONEncoder:
         return DictEncoder()
