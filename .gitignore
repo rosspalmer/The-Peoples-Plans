@@ -1,6 +1,7 @@
 
 # Intellij Ignores
 *.idea
+*.iml
 
 # Java / Scala Ignores
 *.class
