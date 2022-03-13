@@ -43,7 +43,7 @@ def handler(event, context):
     print(JSON_BUCKET)
 
     s3.put_object(
-        Body=data,
+        Body=data.encode(),
         Bucket=JSON_BUCKET,
         Key=f'{data_type}/{data.uid}.json'
     )
