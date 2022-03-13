@@ -8,6 +8,6 @@
 *.log
 
 # Web App Ignores
-packages/web-app/dist
-packages/web-app/node_modules
-packages/web-app/package-lock.json
+src/web-app/dist
+src/web-app/node_modules
+src/web-app/package-lock.json
