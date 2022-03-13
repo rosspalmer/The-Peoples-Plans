@@ -10,3 +10,5 @@
 ## Python
 
 ## IDE Basics
+
+## Coding Practices and Patterns
