@@ -31,7 +31,7 @@ def handler(event, context):
 
     if 'json' not in event:
         print('ERROR3 - FIXME')
-    json_data = event['json']
+    json_data = str(event['json'])
 
     # FIXME remove debug
     print('JSON DATA')
