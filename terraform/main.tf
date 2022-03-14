@@ -43,7 +43,7 @@ resource "aws_lambda_function" "insert_data" {
 
   environment {
     variables = {
-      JSON_BUCKET = local.json_bucket['prod']
+      JSON_BUCKET = local.json_bucket["prod"]
     }
   }
 
