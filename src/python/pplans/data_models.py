@@ -9,6 +9,9 @@ DATE_FMT = '%Y-%m-%dT%H:%M:%S'
 
 class SerializableData(ABC):
 
+    def __init__(self, uid: str):
+        self.uid = uid
+
     @abstractmethod
     def _get_encoder(self) -> JSONEncoder:
         pass
@@ -35,7 +38,7 @@ class DictEncoder(JSONEncoder):
 class RawMessageData(SerializableData):
 
     def __init__(self, uid: str, author: str, text: str, created: str = None):
-        self.uid = uid
+        super().__init__(uid)
         self.author = author
         self.text = text
         self.created = dt.datetime.now().strftime(DATE_FMT) if created is None else created
@@ -56,7 +59,7 @@ class EventData(SerializableData):
 
     def __init__(self, uid: str, name: str, datetime: str,
                  location_uid: str, link: str, tags: List[str] = None):
-        self.uid = uid
+        super().__init__(uid)
         self.name = name
         self.datetime = datetime
         self.location_uid = location_uid
