@@ -1,7 +1,6 @@
 
 from abc import ABC, abstractmethod
 import datetime as dt
-from json import JSONEncoder, loads
 from typing import Any, Dict, List
 
 DATE_FMT = '%Y-%m-%dT%H:%M:%S'
@@ -12,10 +11,6 @@ class SerializableData(ABC):
     def __init__(self, uid: str):
         self.uid = uid
 
-    @abstractmethod
-    def _get_encoder(self) -> JSONEncoder:
-        pass
-
     @staticmethod
     @abstractmethod
     def get_model_name() -> str:
@@ -25,14 +20,6 @@ class SerializableData(ABC):
     @abstractmethod
     def json_object_hook(o: Dict) -> Any:
         pass
-
-    def encode(self) -> str:
-        return self._get_encoder().encode(self)
-
-
-class DictEncoder(JSONEncoder):
-    def default(self, o: Any) -> Any:
-        return o.__dict__
 
 
 class RawMessageData(SerializableData):
@@ -50,9 +37,6 @@ class RawMessageData(SerializableData):
     @staticmethod
     def json_object_hook(o: Dict) -> Any:
         return RawMessageData(**o)
-
-    def _get_encoder(self) -> JSONEncoder:
-        return DictEncoder()
 
 
 class EventData(SerializableData):
@@ -73,55 +57,3 @@ class EventData(SerializableData):
     @staticmethod
     def json_object_hook(o: Dict) -> Any:
         return EventData(**o)
-
-    def _get_encoder(self) -> JSONEncoder:
-        return DictEncoder()
-
-
-class Decoder:
-
-    DATA_MODELS = {
-        RawMessageData,
-        EventData
-    }
-
-    def __init__(self):
-        self._model_map = {model.get_model_name(): model for model in Decoder.DATA_MODELS}
-
-    def run(self, model_name: str, json: str) -> SerializableData:
-
-        if model_name not in self._model_map:
-            print('TODO - model not found exception')
-
-        model_class = self._model_map[model_name]
-
-        data = loads(json, object_hook=model_class.json_object_hook)
-
-        return data
-
-
-class DataPacket(SerializableData):
-
-    class PacketEncoder(JSONEncoder):
-        def default(self, o: Any) -> Any:
-            encode = {
-                'uid': o.uid,
-                'data': [(d.get_model_name, d.encode) for d in o.data]
-            }
-            return encode
-
-    def __init__(self, uid: str, data: List[SerializableData]):
-        super().__init__(uid)
-        self.data = data
-
-    def _get_encoder(self) -> JSONEncoder:
-        return self.PacketEncoder()
-
-    @staticmethod
-    def get_model_name() -> str:
-        return 'data_packet'
-
-    @staticmethod
-    def json_object_hook(o: Dict) -> Any:
-        decode = Decoder()
-        return DataPacket(o['uid'], [decode.run(model, json) for model, json in o['data']])

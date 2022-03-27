@@ -1,13 +1,14 @@
-from json import loads
-from pplans.data.models import RawMessageData, EventData, DataPacket
+
+from pplans.data.models import RawMessageData, EventData
+from pplans.data.serialize import decode, encode
 
 
 class TestRawMessageData:
 
     def test_decode(self):
 
-        msg_json = '{"uid":"B-5", "author":"a@b.co", "text": "hello peach", "created": "Y-M-D"}'
-        msg = loads(msg_json, object_hook=RawMessageData.json_object_hook)
+        json = '{"uid":"B-5", "author":"a@b.co", "text": "hello peach", "created": "Y-M-D"}'
+        msg = decode(RawMessageData.get_model_name(), json)
 
         assert msg.uid == "B-5"
         assert msg.author == "a@b.co"
@@ -22,7 +23,7 @@ class TestRawMessageData:
         answer = '{"uid": "A-1", "author": "ask@merch.com", "text": "Do you know if you need stuff?", ' \
                  f'"created": "{msg_created}"' + '}'
 
-        assert msg.encode() == answer
+        assert encode(msg) == answer
 
 
 class TestEventData:
@@ -34,8 +35,8 @@ class TestEventData:
         event_b_json = '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
                        '"hRe", "link": "hi.jack", "tags": ["ok", "move"]}'
 
-        event_a = loads(event_a_json, object_hook=EventData.json_object_hook)
-        event_b = loads(event_b_json, object_hook=EventData.json_object_hook)
+        event_a = decode(EventData.get_model_name(), event_a_json)
+        event_b = decode(EventData.get_model_name(), event_b_json)
 
         assert event_a.uid == 'E8t'
         assert event_a.name == 'A M8t'
@@ -56,20 +57,7 @@ class TestEventData:
         event_a = EventData("E8t", "A M8t", "1900-02-03", "hRe", "hi.jack")
         event_b = EventData("E8t", "A M8t", "1900-02-03", "hRe", "hi.jack", ["ok", "move"])
 
-        assert event_a.encode() == '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
+        assert encode(event_a) == '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
                                    '"hRe", "link": "hi.jack", "tags": null}'
-        assert event_b.encode() == '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
+        assert encode(event_b) == '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
                                    '"hRe", "link": "hi.jack", "tags": ["ok", "move"]}'
-
-
-class TestDataPacket:
-
-    def test_encode(self):
-
-        dp = DataPacket('bigPops', [
-            RawMessageData('hello', 'world', 'foo', 'bar'),
-            RawMessageData('more', 'generic', 'non', 'sense'),
-            EventData('uyk', 'important-thing', '2018-02-03', 'here', 'www.com', ['A', 'B'])
-        ])
-
-        print(dp.encode())
