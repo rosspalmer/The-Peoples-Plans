@@ -24,9 +24,9 @@ class SerializableData(ABC):
 
 class RawMessageData(SerializableData):
 
-    def __init__(self, uid: str, author: str, text: str, created: str = None):
+    def __init__(self, uid: str, author_uid: str, text: str, created: str = None):
         super().__init__(uid)
-        self.author = author
+        self.author_uid = author_uid
         self.text = text
         self.created = dt.datetime.now().strftime(DATE_FMT) if created is None else created
 
@@ -57,3 +57,19 @@ class EventData(SerializableData):
     @staticmethod
     def json_object_hook(o: Dict) -> Any:
         return EventData(**o)
+
+
+class AuthorData(SerializableData):
+
+    def __init__(self, uid: str, name: str, bot: bool):
+        super().__init__(uid)
+        self.name = name
+        self.bot = bot
+
+    @staticmethod
+    def get_model_name() -> str:
+        return 'author'
+
+    @staticmethod
+    def json_object_hook(o: Dict) -> Any:
+        return AuthorData(**o)

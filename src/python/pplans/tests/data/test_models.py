@@ -1,5 +1,5 @@
 
-from pplans.data.models import RawMessageData, EventData
+from pplans.data.models import AuthorData, RawMessageData, EventData
 from pplans.data.serialize import decode, encode
 
 
@@ -61,3 +61,21 @@ class TestEventData:
                                   '"hRe", "link": "hi.jack", "tags": null}'
         assert encode(event_b) == '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
                                   '"hRe", "link": "hi.jack", "tags": ["ok", "move"]}'
+
+
+class TestAuthorData:
+
+    def test_decode(self):
+
+        json = '{"uid": "ross@palmer.co", "name": "Ross Palmer", "bot": true}'
+        author = decode('author', json)
+
+        assert author.uid == 'ross@palmer.co'
+        assert author.name == 'Ross Palmer'
+        assert author.bot
+
+    def test_encode(self):
+
+        author = AuthorData('ross@palmer.co', 'Ross Palmer', True)
+
+        assert encode(author) == '{"uid": "ross@palmer.co", "name": "Ross Palmer", "bot": true}'
