@@ -1,6 +1,4 @@
 
-from typing import Dict
-
 
 from pplans.data_models import SerializableData
 
