@@ -4,7 +4,7 @@ import boto3
 from os import environ
 from typing import Dict
 
-from pplans import Decoder, S3Data
+from pplans import decode, S3Data
 from pplans.data.models import SerializableData, EventData, RawMessageData
 
 
@@ -27,6 +27,6 @@ def handler(event, context):
         print('ERROR3 - FIXME')
     json = str(event['json']).replace("'", '"')
 
-    data = Decoder().run(model_name, json)
+    data = decode(model_name, json)
 
     s3.insert_data(JSON_BUCKET, data)

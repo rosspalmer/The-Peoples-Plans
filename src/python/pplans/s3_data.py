@@ -1,5 +1,5 @@
 
-
+from pplans import encode
 from pplans.data.models import SerializableData
 
 
@@ -13,7 +13,7 @@ class S3Data:
     def insert_data(self, bucket: str, data: SerializableData):
 
         self.s3.put_object(
-            Body=data.encode(),
+            Body=encode(data),
             Bucket=bucket,
             Key=f'{data.get_model_name()}/{data.uid}.json'
         )
