@@ -1,5 +1,5 @@
 
-from json import JSONEncoder, dumps, loads
+from json import JSONEncoder, dump, dumps, loads
 from typing import Any
 
 from pplans.data.models import *
@@ -37,3 +37,7 @@ class PPlansEncoder(JSONEncoder):
 
 def encode(data: SerializableData) -> str:
     return dumps(data, cls=PPlansEncoder)
+
+
+def encode_stream(data: List[SerializableData], stream):
+    dump(data, stream, cls=PPlansEncoder)

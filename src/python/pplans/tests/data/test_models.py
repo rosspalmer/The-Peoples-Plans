@@ -85,13 +85,62 @@ class TestEventNoteData:
 
 class TestLocationData:
 
+    def test_decode_full(self):
+
+        json = '{"uid": "dplains", "name": "Donut Plains", "link": "mario.com/dplains", ' \
+               '"address": {"street_number": "123", "street": "Mario Ave", "unit": "A", ' \
+               '"city": "Super", "state": "World", "zip_code": 90230}, ' \
+               '"gps": {"lat": 20.34, "long": -2039.2}}'
+        loc = decode('location', json)
+
+        assert loc.uid == 'dplains'
+        assert loc.name == 'Donut Plains'
+        assert loc.link == 'mario.com/dplains'
+
+        assert isinstance(loc.address, LocationAddress)
+        assert loc.address.street_number == '123'
+        assert loc.address.street == 'Mario Ave'
+        assert loc.address.unit == 'A'
+        assert loc.address.city == 'Super'
+        assert loc.address.state == 'World'
+        assert loc.address.zip_code == 90230
+        assert loc.address.cross_street is None
+
+        assert isinstance(loc.gps, LocationGPS)
+        assert loc.gps.lat == 20.34
+        assert loc.gps.long == -2039.2
+
+    def test_decode_empty(self):
+
+        json = '{"uid": "dplains", "name": "Donut Plains", "link": "mario.com/dplains"}'
+        loc = decode('location', json)
+
+        assert loc.uid == 'dplains'
+        assert loc.name == 'Donut Plains'
+        assert loc.link == 'mario.com/dplains'
+        assert loc.address is None
+        assert loc.gps is None
+
     def test_encode_full(self):
 
         loc = LocationData('dplains', 'Donut Plains', 'mario.com/dplains',
                            LocationAddress('123', 'Mario Ave', 'A', 'Super', 'World', 90230),
                            LocationGPS(20.34, -2039.2))
 
-        print(encode(loc))
+        answer = '{"uid": "dplains", "name": "Donut Plains", "link": "mario.com/dplains", ' \
+                 '"address": {"street_number": "123", "street": "Mario Ave", "unit": "A", ' \
+                 '"city": "Super", "state": "World", "zip_code": 90230}, ' \
+                 '"gps": {"lat": 20.34, "long": -2039.2}}'
+
+        assert encode(loc) == answer
+
+    def test_encode_empty(self):
+
+        loc = LocationData('dplains', 'Donut Plains', 'mario.com/dplains')
+
+        answer = '{"uid": "dplains", "name": "Donut Plains", "link": "mario.com/dplains"}'
+
+        assert encode(loc) == answer
 
 
 class TestRawMessageData:

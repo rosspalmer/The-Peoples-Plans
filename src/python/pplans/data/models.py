@@ -125,11 +125,20 @@ class LocationData(SerializableData):
     def get_model_name() -> str:
         return 'location'
 
+    # @staticmethod
+    # def json_object_hook(o: Dict) -> Any:
+    #     address = LocationAddress(**o['address']) if 'address' in o else None
+    #     gps = LocationAddress(**o['gps']) if 'gps' in o else None
+    #     return LocationData(o['uid'], o['name'], o['link'], address, gps)
+
     @staticmethod
     def json_object_hook(o: Dict) -> Any:
-        address = LocationAddress(**o['address']) if 'address' in o else None
-        gps = LocationAddress(**o['gps']) if 'gps' in o else None
-        return LocationData(o['uid'], o['name'], o['link'], address, gps)
+        if 'lat' in o and 'long' in o:
+            return LocationGPS(**o)
+        elif 'uid' in o:
+            return LocationData(**o)
+        else:
+            return LocationAddress(**o)
 
 
 class RawMessageData(SerializableData):
