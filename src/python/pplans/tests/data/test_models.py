@@ -58,6 +58,6 @@ class TestEventData:
         event_b = EventData("E8t", "A M8t", "1900-02-03", "hRe", "hi.jack", ["ok", "move"])
 
         assert encode(event_a) == '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
-                                   '"hRe", "link": "hi.jack", "tags": null}'
+                                  '"hRe", "link": "hi.jack", "tags": null}'
         assert encode(event_b) == '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
-                                   '"hRe", "link": "hi.jack", "tags": ["ok", "move"]}'
+                                  '"hRe", "link": "hi.jack", "tags": ["ok", "move"]}'
