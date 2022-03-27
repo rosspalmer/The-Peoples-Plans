@@ -1,8 +1,5 @@
-
-import pytest
-
 from json import loads
-from pplans.data_models import RawMessageData, EventData, DataPacket
+from pplans.data.models import RawMessageData, EventData, DataPacket
 
 
 class TestRawMessageData:

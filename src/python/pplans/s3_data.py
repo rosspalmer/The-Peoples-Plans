@@ -1,6 +1,6 @@
 
 
-from pplans.data_models import SerializableData
+from pplans.data.models import SerializableData
 
 
 class S3Data:

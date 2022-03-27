@@ -5,7 +5,7 @@ from os import environ
 from typing import Dict
 
 from pplans import Decoder, S3Data
-from pplans.data_models import SerializableData, EventData, RawMessageData
+from pplans.data.models import SerializableData, EventData, RawMessageData
 
 
 DATA_TYPES: Dict[str, SerializableData.__class__] = {
