@@ -73,3 +73,21 @@ class AuthorData(SerializableData):
     @staticmethod
     def json_object_hook(o: Dict) -> Any:
         return AuthorData(**o)
+
+
+class EventNoteData(SerializableData):
+
+    def __init__(self, uid: str, event_uid: str, author_uid: str, note: str, created: str = None):
+        super().__init__(uid)
+        self.event_uid = event_uid
+        self.author_uid = author_uid
+        self.note = note
+        self.created = dt.datetime.now().strftime(DATE_FMT) if created is None else created
+
+    @staticmethod
+    def get_model_name() -> str:
+        return 'event_note'
+
+    @staticmethod
+    def json_object_hook(o: Dict) -> Any:
+        return EventNoteData(**o)

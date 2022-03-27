@@ -2,13 +2,13 @@
 from json import JSONEncoder, dumps, loads
 from typing import Any
 
-from pplans.data.models import SerializableData
-from pplans.data.models import AuthorData, RawMessageData, EventData
+from pplans.data.models import *
 
 DATA_MODELS_DICT = {
-    RawMessageData,
+    AuthorData,
     EventData,
-    AuthorData
+    EventNoteData,
+    RawMessageData,
 }
 MODEL_MAP = {cls.get_model_name(): cls for cls in DATA_MODELS_DICT}
 
