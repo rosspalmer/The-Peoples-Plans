@@ -22,7 +22,7 @@ class S3Data:
 
     def insert_data_batch(self, bucket: str, batch_uid: str, data: List[SerializableData]):
 
-        models = {d.__class__ for d in data}
+        models = {d.get_model_name() for d in data}
         if len(models) > 1:
             print('TODO - not all the same model type')
         data_model_name = list(models)[0]
