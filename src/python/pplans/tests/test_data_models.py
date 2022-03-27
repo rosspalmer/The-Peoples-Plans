@@ -2,7 +2,7 @@
 import pytest
 
 from json import loads
-from pplans.data_models import RawMessageData, EventData
+from pplans.data_models import RawMessageData, EventData, DataPacket
 
 
 class TestRawMessageData:
@@ -63,3 +63,16 @@ class TestEventData:
                                    '"hRe", "link": "hi.jack", "tags": null}'
         assert event_b.encode() == '{"uid": "E8t", "name": "A M8t", "datetime": "1900-02-03", "location_uid": ' \
                                    '"hRe", "link": "hi.jack", "tags": ["ok", "move"]}'
+
+
+class TestDataPacket:
+
+    def test_encode(self):
+
+        dp = DataPacket('bigPops', [
+            RawMessageData('hello', 'world', 'foo', 'bar'),
+            RawMessageData('more', 'generic', 'non', 'sense'),
+            EventData('uyk', 'important-thing', '2018-02-03', 'here', 'www.com', ['A', 'B'])
+        ])
+
+        print(dp.encode())

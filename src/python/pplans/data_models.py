@@ -98,3 +98,30 @@ class Decoder:
         data = loads(json, object_hook=model_class.json_object_hook)
 
         return data
+
+
+class DataPacket(SerializableData):
+
+    class PacketEncoder(JSONEncoder):
+        def default(self, o: Any) -> Any:
+            encode = {
+                'uid': o.uid,
+                'data': [(d.get_model_name, d.encode) for d in o.data]
+            }
+            return encode
+
+    def __init__(self, uid: str, data: List[SerializableData]):
+        super().__init__(uid)
+        self.data = data
+
+    def _get_encoder(self) -> JSONEncoder:
+        return self.PacketEncoder()
+
+    @staticmethod
+    def get_model_name() -> str:
+        return 'data_packet'
+
+    @staticmethod
+    def json_object_hook(o: Dict) -> Any:
+        decode = Decoder()
+        return DataPacket(o['uid'], [decode.run(model, json) for model, json in o['data']])
