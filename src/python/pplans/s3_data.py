@@ -1,9 +1,8 @@
 
 from io import StringIO
-from json import dump
 from typing import List
 
-from pplans import encode
+from pplans import encode, encode_stream
 from pplans.data.models import SerializableData
 
 
@@ -28,7 +27,7 @@ class S3Data:
         data_model_name = list(models)[0]
 
         body = StringIO()
-        dump([encode(d) for d in data], body)
+        encode_stream(data, body)
 
         self.s3.put_object(
             Body=body,
