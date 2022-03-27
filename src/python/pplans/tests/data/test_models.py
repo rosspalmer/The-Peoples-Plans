@@ -3,27 +3,22 @@ from pplans.data.models import *
 from pplans.data.serialize import decode, encode
 
 
-class TestRawMessageData:
+class TestAuthorData:
 
     def test_decode(self):
 
-        json = '{"uid":"B-5", "author":"a@b.co", "text": "hello peach", "created": "Y-M-D"}'
-        msg = decode(RawMessageData.get_model_name(), json)
+        json = '{"uid": "ross@palmer.co", "name": "Ross Palmer", "bot": true}'
+        author = decode('author', json)
 
-        assert msg.uid == "B-5"
-        assert msg.author == "a@b.co"
-        assert msg.text == "hello peach"
-        assert msg.created == "Y-M-D"
+        assert author.uid == 'ross@palmer.co'
+        assert author.name == 'Ross Palmer'
+        assert author.bot
 
     def test_encode(self):
 
-        msg = RawMessageData("A-1", "ask@merch.com", "Do you know if you need stuff?")
-        msg_created = msg.created
+        author = AuthorData('ross@palmer.co', 'Ross Palmer', True)
 
-        answer = '{"uid": "A-1", "author": "ask@merch.com", "text": "Do you know if you need stuff?", ' \
-                 f'"created": "{msg_created}"' + '}'
-
-        assert encode(msg) == answer
+        assert encode(author) == '{"uid": "ross@palmer.co", "name": "Ross Palmer", "bot": true}'
 
 
 class TestEventData:
@@ -63,24 +58,6 @@ class TestEventData:
                                   '"hRe", "link": "hi.jack", "tags": ["ok", "move"]}'
 
 
-class TestAuthorData:
-
-    def test_decode(self):
-
-        json = '{"uid": "ross@palmer.co", "name": "Ross Palmer", "bot": true}'
-        author = decode('author', json)
-
-        assert author.uid == 'ross@palmer.co'
-        assert author.name == 'Ross Palmer'
-        assert author.bot
-
-    def test_encode(self):
-
-        author = AuthorData('ross@palmer.co', 'Ross Palmer', True)
-
-        assert encode(author) == '{"uid": "ross@palmer.co", "name": "Ross Palmer", "bot": true}'
-
-
 class TestEventNoteData:
 
     def test_decode(self):
@@ -104,3 +81,27 @@ class TestEventNoteData:
                  f'"note": "hello peach", "created": "{note_created}"' + '}'
 
         assert encode(note) == answer
+
+
+class TestRawMessageData:
+
+    def test_decode(self):
+
+        json = '{"uid":"B-5", "author":"a@b.co", "text": "hello peach", "created": "Y-M-D"}'
+        msg = decode(RawMessageData.get_model_name(), json)
+
+        assert msg.uid == "B-5"
+        assert msg.author == "a@b.co"
+        assert msg.text == "hello peach"
+        assert msg.created == "Y-M-D"
+
+    def test_encode(self):
+
+        msg = RawMessageData("A-1", "ask@merch.com", "Do you know if you need stuff?")
+        msg_created = msg.created
+
+        answer = '{"uid": "A-1", "author": "ask@merch.com", "text": "Do you know if you need stuff?", ' \
+                 f'"created": "{msg_created}"' + '}'
+
+        assert encode(msg) == answer
+

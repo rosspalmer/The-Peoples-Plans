@@ -22,21 +22,20 @@ class SerializableData(ABC):
         pass
 
 
-class RawMessageData(SerializableData):
+class AuthorData(SerializableData):
 
-    def __init__(self, uid: str, author_uid: str, text: str, created: str = None):
+    def __init__(self, uid: str, name: str, bot: bool):
         super().__init__(uid)
-        self.author_uid = author_uid
-        self.text = text
-        self.created = dt.datetime.now().strftime(DATE_FMT) if created is None else created
+        self.name = name
+        self.bot = bot
 
     @staticmethod
     def get_model_name() -> str:
-        return 'raw_message'
+        return 'author'
 
     @staticmethod
     def json_object_hook(o: Dict) -> Any:
-        return RawMessageData(**o)
+        return AuthorData(**o)
 
 
 class EventData(SerializableData):
@@ -59,22 +58,6 @@ class EventData(SerializableData):
         return EventData(**o)
 
 
-class AuthorData(SerializableData):
-
-    def __init__(self, uid: str, name: str, bot: bool):
-        super().__init__(uid)
-        self.name = name
-        self.bot = bot
-
-    @staticmethod
-    def get_model_name() -> str:
-        return 'author'
-
-    @staticmethod
-    def json_object_hook(o: Dict) -> Any:
-        return AuthorData(**o)
-
-
 class EventNoteData(SerializableData):
 
     def __init__(self, uid: str, event_uid: str, author_uid: str, note: str, created: str = None):
@@ -91,3 +74,20 @@ class EventNoteData(SerializableData):
     @staticmethod
     def json_object_hook(o: Dict) -> Any:
         return EventNoteData(**o)
+
+
+class RawMessageData(SerializableData):
+
+    def __init__(self, uid: str, author_uid: str, text: str, created: str = None):
+        super().__init__(uid)
+        self.author_uid = author_uid
+        self.text = text
+        self.created = dt.datetime.now().strftime(DATE_FMT) if created is None else created
+
+    @staticmethod
+    def get_model_name() -> str:
+        return 'raw_message'
+
+    @staticmethod
+    def json_object_hook(o: Dict) -> Any:
+        return RawMessageData(**o)
