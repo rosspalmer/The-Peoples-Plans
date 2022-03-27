@@ -6,5 +6,5 @@ pat='^(.+)\/terraform'
 root="${BASH_REMATCH[1]}"
 
 # Package python lambdas
-cd "${root}/packages/peoples-python"
+cd "${root}/src/python"
 zip -r "${root}/terraform/lambda-zips/python-lambdas.zip" ./*
