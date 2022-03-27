@@ -83,6 +83,17 @@ class TestEventNoteData:
         assert encode(note) == answer
 
 
+class TestLocationData:
+
+    def test_encode_full(self):
+
+        loc = LocationData('dplains', 'Donut Plains', 'mario.com/dplains',
+                           LocationAddress('123', 'Mario Ave', 'A', 'Super', 'World', 90230),
+                           LocationGPS(20.34, -2039.2))
+
+        print(encode(loc))
+
+
 class TestRawMessageData:
 
     def test_decode(self):

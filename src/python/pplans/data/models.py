@@ -21,6 +21,10 @@ class SerializableData(ABC):
     def json_object_hook(o: Dict) -> Any:
         pass
 
+    @staticmethod
+    def encode(o: Any) -> Any:
+        return {k: v for k, v in o.__dict__.items() if v is not None}
+
 
 class AuthorData(SerializableData):
 
@@ -74,6 +78,58 @@ class EventNoteData(SerializableData):
     @staticmethod
     def json_object_hook(o: Dict) -> Any:
         return EventNoteData(**o)
+
+
+class LocationAddress:
+
+    def __init__(self, street_number: str = None, street: str = None, unit: str = None,
+                 city: str = None, state: str = None, zip_code: int = None, cross_street: str = None):
+        self.street_number = street_number
+        self.street = street
+        self.unit = unit
+        self.city = city
+        self.state = state
+        self.zip_code = zip_code
+        self.cross_street = cross_street
+
+
+class LocationGPS:
+
+    def __init__(self, lat: float, long: float):
+        self.lat = lat
+        self.long = long
+
+
+class LocationData(SerializableData):
+
+    def __init__(self, uid: str, name: str, link: str,
+                 address: LocationAddress = None, gps: LocationGPS = None):
+        super().__init__(uid)
+        self.name = name
+        self.link = link
+        self.address = address
+        self.gps = gps
+
+    @staticmethod
+    def encode(o: Any) -> Any:
+
+        data = {'uid': o.uid, 'name': o.name, 'link': o.link}
+        if o.address is not None:
+            data['address'] = super().encode(o.address)
+        if o.gps is not None:
+            data['gps'] = super().encode(o.gps)
+
+        return data
+
+    @staticmethod
+    def get_model_name() -> str:
+        return 'location'
+
+    @staticmethod
+    def json_object_hook(o: Dict) -> Any:
+        address = LocationAddress(**o['address']) if 'address' in o else None
+        gps = LocationAddress(**o['gps']) if 'gps' in o else None
+        return LocationData(o['uid'], o['name'], o['link'], address, gps)
 
 
 class RawMessageData(SerializableData):

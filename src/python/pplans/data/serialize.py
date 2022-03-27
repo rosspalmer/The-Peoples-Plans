@@ -4,13 +4,14 @@ from typing import Any
 
 from pplans.data.models import *
 
-DATA_MODELS_DICT = {
+DATA_MODELS = {
     AuthorData,
     EventData,
     EventNoteData,
+    LocationData,
     RawMessageData,
 }
-MODEL_MAP = {cls.get_model_name(): cls for cls in DATA_MODELS_DICT}
+MODEL_MAP = {cls.get_model_name(): cls for cls in DATA_MODELS}
 
 
 def decode(model_name: str, json: str) -> SerializableData:
@@ -24,16 +25,12 @@ def decode(model_name: str, json: str) -> SerializableData:
     return data
 
 
-def is_dict_model(o: Any) -> bool:
-    return True in {isinstance(o, cls) for cls in DATA_MODELS_DICT}
-
-
 class PPlansEncoder(JSONEncoder):
 
     def default(self, o: Any) -> Any:
 
-        if is_dict_model(o):
-            return o.__dict__
+        if o.__class__ in DATA_MODELS:
+            return o.encode(o)
 
         return JSONEncoder.default(self, o)
 
