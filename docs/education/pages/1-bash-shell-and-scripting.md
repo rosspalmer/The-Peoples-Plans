@@ -35,6 +35,7 @@ in a text based commands so much more is possible using the CLI than any GUI.
 - **Computer Friendly:** Using the CLI is in itself a programming language
 where each time you enter a command you are entering a line of code. These 
 means the power of the CLI can be automated in scripts.
+- **Universal:** TODO
 - **No "Click on" Tutorials:** Part of learning is reading online docs and
 tutorials and using the CLI removes the need for confusing "click on" steps.
 Instead, sets of commands are shared which are exact and can be modified
@@ -80,17 +81,97 @@ TODO
 
 There is no single book to read on the topic but having a book covering a
 range of `bash` commands, general linux/unix mechanics and shell scripting.
+I have recommendations listed below but there are many options, some probably 
+cheaper or free. 
 
+What is important to have a Unix book that is broad enough to act as reference 
+material and can be browsed to find new commands or topics to learn. Do not 
+try to read the book cover to cover but do read full chapters on subjects as 
+they become relevant. 
 
-- Live practice
-- Script Examples
+TODO Pic
+
+[<img src="http://www.google.com.au/images/nav_logo7.png">](http://google.com.au/)
+
+_The Linux Command Line: William Shotts_ - Great modern book covering everything 
+you need.
+
+TODO pic
+https://upload.wikimedia.org/wikipedia/en/4/43/English4.gif
+
+<img src="https://upload.wikimedia.org/wikipedia/en/4/43/English4.gif">
+
+_The Unix Programming Environment:_ Brian Kernighan - Published in 1984 and still 
+found used online for under 10$ today, this forty-year-old book teaches Unix 
+commands and programming as still used today. I would highly recommend looking 
+through a copy to gain perspective on how long the same Unix tools have been in use.
+
+- https://www.gnu.org/software/bash/manual/bash.html
+
+### Practice
+
+Generally you won't be writing shell script regularly like you would other 
+languages in the modern day to day. To advance your knowledge of `bash` script
+you should find excuses to practice. For example, using your terminal to find
+and move files instead of the file explorer or writing a script to automate
+any manual computer tasks you do regularly. The more you use the command line
+the more comfortable and useful it becomes.
+
+One big benefit of this practice is that it becomes vital when working with
+remote server based resources which do not provide a GUI interface. Even with
+today's modern web tools there is still a need to know how interface with a
+server directly which requires practice to do confidently. Also, the ability
+to shell script allows you to quickly write "mini-programs" without installing
+anything new.
+
+### Script Examples
+
+Bash scripting has been around a long time and was used more liberally in
+the past. There is a wealth of script examples in books and online which
+can show you what's possible within Unix. Nowadays, the tasks of many 
+examples would be performed within a real language or tool but knowing
+how to perform complex tasks with the CLI is very useful when no other 
+tools are convenient or accessible.
+
+TODO
+
+_Wicked Cool Shell Scripts: Dave Taylor and Brandon Perry_ - A definite
+tour de force of the CLI shell with great breakdowns of the code steps.
+Also contains a collection of scripts highly relevant to computing tasks
+frequent in the modern day.
 
 ## Common Shell Commands
 
-- File System
-- Text Processing
+I will not go into these commands in detail but will provide some context
+on their usage. Use the online resources below and via searching to learn
+more about each command. 
 
-## Command Mechanics
+Google Tip: `bash <command> <question>`
+
+TODO - Explain options and arguments
+
+These are only two of the many potential uses of the Unix command line.
+
+### File System
+
+Having control of a computers file system is skill number one to learn
+for the command line. The `bash` file system is simple but requires an
+older computer mindset. Each command is occupied by a folder location
+called your **Current Working Directory** which is the current folder
+you are "in" (which can be viewed with the `pwd` command). This
+location may be used directly by the command or many used as a 
+reference point for any specified file/folder locations.
+
+For example, the change directories command `cd` is used to move the 
+current working directory. The argument following the command is the
+new location which can be given as the full path (example A) or the
+shorter relative path (example B). The dot notion allows you to move
+backwards from the relative location as example C with a different
+root folder can be accessed releatively by example D. 
+
+TODO
+
+### Text Processing
 
 ## Bash Scripting
 
