@@ -59,3 +59,10 @@ of practice is essential to working well with other developers.
 ### [Cloud and Distributed Computing]()
 
 ### [AWS Services]()
+
+```
+The Peoples Plans  Copyright (C) 2022  Ross Palmer
+This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type `show c' for details.
+```
