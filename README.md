@@ -1,6 +1,6 @@
 # The-Peoples-Plans
 
-Prod Site: https://master.d2vt7v2anveb09.amplifyapp.com/
+Prod Site: TODO
 
 ## Dev plan
 
@@ -40,8 +40,21 @@ Prod Site: https://master.d2vt7v2anveb09.amplifyapp.com/
 
 ![Component Map](./docs/component-map.png)
 
-## Required Terraform Variables
 
-- **TODOAWSKEY**
-- **TODOAWSSECRET**
+## Terraform Setup
+
+### Terraform AWS Account Permissions
+
+- 
+
+### Required Input Variables
+
+
+_Enviromental Variables_
+
+- **AWS_ACCESS_KEY_ID** - Terraform AWS account access key
+- **AWS_SECRET_ACCESS_KEY** - Terraform AWS account secret access key
+
+_Terraform Variables_
+
 - **repository** - Link to repository root of project
