@@ -39,3 +39,9 @@ Prod Site: https://master.d2vt7v2anveb09.amplifyapp.com/
 ![Overall Map](./docs/overall.png)
 
 ![Component Map](./docs/component-map.png)
+
+## Required Terraform Variables
+
+- **TODOAWSKEY**
+- **TODOAWSSECRET**
+- **repository** - Link to repository root of project
