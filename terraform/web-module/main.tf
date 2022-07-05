@@ -7,23 +7,27 @@ resource "aws_amplify_app" "pplans_web_page" {
 
   # The default build_spec added by the Amplify Console for React.
   build_spec = <<-EOT
-    version: 0.1
+
+    version: 0.2
+
     frontend:
       phases:
         preBuild:
           commands:
-            - cd src/web-app/app
-            - yarn install
+            - npm install
         build:
           commands:
-            - yarn run build
+            - npm run build
       artifacts:
-        baseDirectory: build
+        baseDirectory: dist
         files:
           - '**/*'
       cache:
         paths:
           - node_modules/**/*
+
+    appRoot: src/web-app
+
   EOT
 
   # The default rewrites and redirects added by the Amplify Console.
