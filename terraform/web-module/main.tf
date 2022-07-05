@@ -2,7 +2,7 @@
 
 resource "aws_amplify_app" "web_page" {
   name       = "web_page"
-  repository = var.repository + "/src/web-app/app"
+  repository = "${var.repository}/src/web-app/app"
 
   # The default build_spec added by the Amplify Console for React.
   build_spec = <<-EOT
