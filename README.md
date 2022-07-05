@@ -57,11 +57,12 @@ along other resources on a shared AWS account.
 ### Required Input Variables
 
 
-_Enviromental Variables_
+_Environmental Variables_
 
 - **AWS_ACCESS_KEY_ID** - Terraform AWS account access key
 - **AWS_SECRET_ACCESS_KEY** - Terraform AWS account secret access key
 
 _Terraform Variables_
 
+- **access_token** - GitHub access token
 - **repository** - Link to repository root of project
