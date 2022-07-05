@@ -43,9 +43,16 @@ Prod Site: TODO
 
 ## Terraform Setup
 
+NOTE: This setup gives your `terraform` AWS user a large amount of power
+and potential to effect your entire AWS account. Not recommended for use
+along other resources on a shared AWS account.
+
 ### Terraform AWS Account Permissions
 
-- 
+- `IAMFullAccess`
+- `AmazonS3FullAccess`
+- `AWSLambda_FullAccess`
+- `AdministratorAccess-Amplify`
 
 ### Required Input Variables
 

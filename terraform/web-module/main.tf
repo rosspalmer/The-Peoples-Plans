@@ -1,8 +1,8 @@
 
 
-resource "aws_amplify_app" "web_page" {
-  name       = "web_page"
-  repository = "${var.repository}/src/web-app/app"
+resource "aws_amplify_app" "pplans_web_page" {
+  name       = "pplans_web_page"
+  repository = var.repository
 
   # The default build_spec added by the Amplify Console for React.
   build_spec = <<-EOT
@@ -11,6 +11,7 @@ resource "aws_amplify_app" "web_page" {
       phases:
         preBuild:
           commands:
+            - cd src/web-app/app
             - yarn install
         build:
           commands:
