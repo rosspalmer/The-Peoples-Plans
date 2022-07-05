@@ -5,7 +5,6 @@ resource "aws_amplify_app" "pplans_web_page" {
   repository = var.repository
   access_token = var.access_token
 
-  # The default build_spec added by the Amplify Console for React.
   build_spec = <<-EOT
 
     version: 0.2
