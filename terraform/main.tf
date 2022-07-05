@@ -14,5 +14,6 @@ module s3_module {
 
 module web_module {
   source = "./web-module"
+  access_token = var.access_token
   repository = var.repository
 }
